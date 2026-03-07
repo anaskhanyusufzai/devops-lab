@@ -1,4 +1,4 @@
-name: DevOps CI pipeline
+name: DevOps CI Pipeline
 
 on:
     push:
@@ -12,8 +12,14 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
 
+            - name: Login to Docker Hub
+              uses: docker/login-action@v2
+              with:
+                username: ${{secrets.DOCKER_USERNAME}}
+                password: ${{secrets.DOCKER_PASSWORD}}
+
             - name: Build Docker Image
-              run: docker build -t devops-lab .
+              run: docker build -t anaskhanyusufzai/devops-lab .
 
-
-
+            - name: Push Docker Image
+              run: docker push anaskhanyusufzai/devops-lab
